@@ -19,5 +19,6 @@ RUN cabal update \
         && rm -rf /pandoc
 ENV PATH $PATH:/root/.cabal/bin
 
-#ENTRYPOINT ["/root/.cabal/bin/pandoc"]
-#CMD ["--help"]
+ENTRYPOINT ["/root/.cabal/bin/pandoc"]
+
+CMD ["--help"]
