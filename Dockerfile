@@ -1,24 +1,21 @@
-FROM haskell:8.4
-MAINTAINER Charo Nuguid <me@thegeekettespeaketh.com>
+FROM headgeekette/latex:2020
+
+ENV PANDOC_VERSION 2.10.1
 
 RUN apt-get update \
         && apt-get install -y wget \
-        && apt-get clean
+        && apt-get clean \
+        && rm -rf /var/lib/apt/lists/*
 
 # Download pandoc
 RUN mkdir pandoc \
         && cd pandoc \
-        && wget https://hackage.haskell.org/package/pandoc-2.3.1/pandoc-2.3.1.tar.gz \
-        && tar xvzf pandoc-2.3.1.tar.gz \
-        && cd pandoc-2.3.1
+        && wget https://github.com/jgm/pandoc/releases/download/${PANDOC_VERSION}/pandoc-${PANDOC_VERSION}-1-amd64.deb \
+        && dpkg -i pandoc-${PANDOC_VERSION}-1-amd64.deb 
+        #\
+        #&& cd pandoc-${PANDOC_VERSION}
 
-# update cabal, install pandoc, clean up
-RUN cabal update \
-        && cabal install pandoc \
-        && cd \
-        && rm -rf /pandoc
-ENV PATH $PATH:/root/.cabal/bin
-
-ENTRYPOINT ["/root/.cabal/bin/pandoc"]
+ENTRYPOINT ["pandoc"]
 
 CMD ["--help"]
+
