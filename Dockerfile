@@ -1,9 +1,10 @@
-FROM headgeekette/latex:2020
+FROM headgeekette/latex:2021
 
-ENV PANDOC_VERSION 2.10.1
+ENV PANDOC_VERSION 2.14.1 
 
 RUN apt-get update \
-        && apt-get install -y wget \
+        && apt-get install -y --no-install-recommends \
+		 wget \
         && apt-get clean \
         && rm -rf /var/lib/apt/lists/*
 
